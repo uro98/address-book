@@ -14,18 +14,20 @@
         <main>
             <section class="display">
                 <h2>Contacts</h2>
-                <ul>
+                <ul id="contact-list">
                 </ul>
             </section>
 
             <section class="new-item">
-                <h2>Add a new contact</h2>
-                <form>
+                <h2 id="form-title">Add a new contact</h2>
+                <form id="form">
                     Name:<br />
                     <input id=name type="text" required /> <br />
                     Phone number:<br />
-                    <input id=phone type="text" required /> <br />
-                    <button>Add contact</button>
+                    <input id=phone type="number" required /> <br />
+                    Email:<br />
+                    <input id=email type="email" required /> <br />
+                    <button id="form-button">Add contact</button>
                 </form>
             </section>
         </main>
