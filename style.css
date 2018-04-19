@@ -1,8 +1,75 @@
-ul {
-    list-style: none;
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #EEDFC0;
 }
 
-.my-handle {
-	cursor: move;
-	cursor: -webkit-grabbing;
+.main {
+    margin: auto;
+    width: 85%;
+}
+
+h1 {
+    font-family: 'Shadows Into Light', cursive;
+    text-align: center;
+    font-size: 50px;
+    margin: 20px 30px;
+}
+
+h2 {
+    text-align: center;
+}
+
+.display {
+    display: inline-block;
+    width: 70%;
+}
+
+.new-person, .new-org {
+    display: inline-block;
+    border: 5px solid #5c5c5c;
+    border-radius: 15px;
+    padding: 15px;
+    float: right;
+    width: 25%
+}
+
+#person-form-button {
+    margin-top: 8px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin: 1px;
+    background-color: #ebebeb;
+    padding: 5px 10px;
+}
+
+li div {
+    margin: 0;
+}
+
+.name {
+    display: inline-block;
+    margin: 0;
+    width: 33%;
+}
+
+.phone {
+    display: inline-block;
+    margin: 0;
+    width: 15%;
+}
+
+.email {
+    display: inline-block;
+    margin: 0;
+    width: 33%;
+}
+
+ul button {
+    margin: 2px;
 }
