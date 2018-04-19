@@ -4,35 +4,54 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Address Book</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|Shadows+Into+Light" rel="stylesheet">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
         <link href="style.css" rel="stylesheet" />
     </head>
     <body>
-        <script src="http://rubaxa.github.io/Sortable/Sortable.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="index.js"></script>
 
         <header>
             <h1>Address Book</h1>
         </header>
 
-        <main>
-            <section class="display">
+        <div class="main">
+            <div class="display">
                 <h2>Contacts</h2>
                 <ul id="contact-list">
                 </ul>
-            </section>
+            </div>
 
-            <section class="new-item">
-                <h2 id="form-title">Add a new contact</h2>
-                <form id="form">
+            <div class="new-person">
+                <h2 id="person-form-title">Add a new contact</h2>
+                <form id="person-form">
                     Name:<br />
                     <input id=name type="text" required /> <br />
                     Phone number:<br />
                     <input id=phone type="number" required /> <br />
                     Email:<br />
                     <input id=email type="email" required /> <br />
-                    <button id="form-button">Add contact</button>
+                    Organisation:<br />
+                    <input id=org type="text" required /> <br />
+                    <button id="person-form-button">Add contact</button>
                 </form>
-            </section>
-        </main>
+            </div>
+
+            <div class="new-org">
+                <h2 id="org-form-title">Add a new organisation</h2>
+                <form id="org-form">
+                    Name:<br />
+                    <input id=org-name type="text" required /> <br />
+                    Phone number:<br />
+                    <input id=org-phone type="number" required /> <br />
+                    Email:<br />
+                    <input id=org-email type="email" required /> <br />
+                    <button id="org-form-button">Add organisation</button>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
