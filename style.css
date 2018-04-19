@@ -1,0 +1,8 @@
+ul {
+    list-style: none;
+}
+
+.my-handle {
+	cursor: move;
+	cursor: -webkit-grabbing;
+}

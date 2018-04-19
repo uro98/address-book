@@ -8,6 +8,8 @@ window.onload = function() {
     var formTitle = document.getElementById('form-title');
     var formButton = document.getElementById('form-button');
 
+    var sortable = Sortable.create(contactList, { handle: '.my-handle' });
+
     // Try to open database
     var request = window.indexedDB.open('address-book', version);
 
@@ -74,15 +76,19 @@ window.onload = function() {
             if(cursor) {
                 // Put each contact into the contact list
                 var contact = document.createElement('li');
+                var span = document.createElement('span'); // For Sortable list handle
                 var name = document.createElement('h3');
                 var phone = document.createElement('p');
                 var email = document.createElement('p');
 
+                span.classList.add('my-handle')
+                span.textContent = '::';
                 name.textContent = cursor.value.name;
                 phone.textContent = cursor.value.phone;
                 email.textContent = cursor.value.email;
 
                 contact.setAttribute('contact-id', cursor.value.id);
+                contact.appendChild(span);
                 contact.appendChild(name);
                 contact.appendChild(phone);
                 contact.appendChild(email);
