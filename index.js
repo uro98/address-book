@@ -2,8 +2,6 @@ var db;
 var version = 1;
 var editEvent;
 
-// person/organisation, scroll
-
 window.onload = function() {
     var contactList = document.getElementById('contact-list');
     var personForm = document.getElementById('person-form');
@@ -83,11 +81,11 @@ window.onload = function() {
         event.preventDefault();
 
         // Get new contact data from form
-        var newOrg = { name: orgForm.elements['name'].value, phone: orgForm.elements['phone'].value, email: orgForm.elements['email'].value };
+        var newOrg = { name: orgForm.elements['org-name'].value, phone: orgForm.elements['org-phone'].value, email: orgForm.elements['org-email'].value };
 
         // Access the object store
-        var transaction = db.transaction(['org'], 'readwrite');
-        var orgStore = transaction.objectStore('org');
+        var transaction = db.transaction(['orgs'], 'readwrite');
+        var orgStore = transaction.objectStore('orgs');
         var request = orgStore.add(newOrg);
 
         request.onsuccess = function() {
@@ -106,36 +104,83 @@ window.onload = function() {
             contactList.removeChild(contactList.firstChild);
         }
 
-        // Get object store cursor
-        var contactStore = db.transaction('contacts').objectStore('contacts');
-        contactStore.openCursor().onsuccess = function(event) {
+        // Get organisations
+        var orgStore = db.transaction('orgs').objectStore('orgs');
+        orgStore.openCursor().onsuccess = function(event) {
             var cursor = event.target.result;
-            console.log(cursor);
 
             if(cursor) {
-                console.log(cursor);
                 // Put each contact into the contact list
                 var contact = document.createElement('li');
                 var name = document.createElement('p');
                 var phone = document.createElement('p');
                 var email = document.createElement('p');
+                var type = document.createElement('p');
+
+                name.textContent = cursor.value.name;
+                phone.textContent = cursor.value.phone;
+                email.textContent = cursor.value.email;
+                type.textContent = 'Organisation';
+
+                name.setAttribute('class', 'name');
+                phone.setAttribute('class', 'phone');
+                email.setAttribute('class', 'org-email');
+                type.setAttribute('class', 'type');
+                contact.setAttribute('contact-id', cursor.value.id);
+
+                contact.appendChild(name);
+                contact.appendChild(phone);
+                contact.appendChild(email);
+                contact.appendChild(type);
+                contactList.appendChild(contact);
+
+                // Create delete contact button
+                var ediButton = document.createElement('button');
+                contact.appendChild(ediButton);
+                ediButton.textContent = 'Edit';
+                ediButton.onclick = editOrg;
+
+                // Create delete contact button
+                var delButton = document.createElement('button');
+                contact.appendChild(delButton);
+                delButton.textContent = 'Delete';
+                delButton.onclick = deleteOrg;
+
+                cursor.continue();
+            }
+        };
+
+
+        // Get people
+        var contactStore = db.transaction('contacts').objectStore('contacts');
+        contactStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            if(cursor) {
+                var contact = document.createElement('li');
+                var name = document.createElement('p');
+                var phone = document.createElement('p');
+                var email = document.createElement('p');
                 var org = document.createElement('p');
+                var type = document.createElement('p');
 
                 name.textContent = cursor.value.name;
                 phone.textContent = cursor.value.phone;
                 email.textContent = cursor.value.email;
                 org.textContent = cursor.value.org;
+                type.textContent = 'Person';
 
                 name.setAttribute('class', 'name');
                 phone.setAttribute('class', 'phone');
                 email.setAttribute('class', 'email');
                 org.setAttribute('class', 'org');
+                type.setAttribute('class', 'type');
                 contact.setAttribute('contact-id', cursor.value.id);
 
                 contact.appendChild(name);
                 contact.appendChild(phone);
                 contact.appendChild(email);
                 contact.appendChild(org);
+                contact.appendChild(type);
                 contactList.appendChild(contact);
 
                 // Create delete contact button
@@ -158,6 +203,7 @@ window.onload = function() {
     }
 
     function editContact(event) {
+        scroll(0,0);
         personFormTitle.textContent = 'Edit the contact';
         personFormButton.textContent = 'Update contact';
 
@@ -178,6 +224,7 @@ window.onload = function() {
     }
 
     function editOrg(event) {
+        scroll(0,0);
         orgFormTitle.textContent = 'Edit the organisation';
         orgFormButton.textContent = 'Update organisation';
 
@@ -244,9 +291,9 @@ window.onload = function() {
         request.onsuccess = function(event) {
             var data = event.target.result;
 
-            data.name = orgForm.elements['name'].value;
-            data.phone = orgForm.elements['phone'].value;
-            data.email = orgForm.elements['email'].value;
+            data.name = orgForm.elements['org-name'].value;
+            data.phone = orgForm.elements['org-phone'].value;
+            data.email = orgForm.elements['org-email'].value;
 
             var update = orgStore.put(data);
 
@@ -278,6 +325,20 @@ window.onload = function() {
         };
     }
 
+    function deleteOrg(event) {
+        var contactId = Number(event.target.parentNode.getAttribute('contact-id'));
+
+        var transaction = db.transaction(['orgs'], 'readwrite');
+        var contactStore = transaction.objectStore('orgs');
+        var request = contactStore.delete(contactId);
+
+        transaction.oncomplete = function() {
+            // Remove contact (parent of button) from contact list (parent of contact)
+            event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+            checkEmpty();
+        };
+    }
+
     function formValues(form, name, phone, email, org) {
         if (form === 'personForm') {
             personForm.elements['name'].value = name;
@@ -285,9 +346,9 @@ window.onload = function() {
             personForm.elements['email'].value = email;
             personForm.elements['org'].value = org;
         } else {
-            orgForm.elements['name'].value = name;
-            orgForm.elements['phone'].value = phone;
-            orgForm.elements['email'].value = email;
+            orgForm.elements['org-name'].value = name;
+            orgForm.elements['org-phone'].value = phone;
+            orgForm.elements['org-email'].value = email;
         }
     }
 
