@@ -21,7 +21,7 @@ h2 {
 
 .display {
     display: inline-block;
-    width: 70%;
+    width: 100%;
 }
 
 .new-person, .new-org {
@@ -30,10 +30,20 @@ h2 {
     border-radius: 15px;
     padding: 15px;
     float: right;
-    width: 25%
 }
 
-#person-form-button {
+.new-org {
+    margin-right: 7%;
+    width: 35%;
+}
+
+.new-person {
+    float: left;
+    margin-left: 10%;
+    width: 30%;
+}
+
+#person-form-button, #org-form-button {
     margin-top: 8px;
 }
 
@@ -52,22 +62,20 @@ li div {
     margin: 0;
 }
 
-.name {
+.name, .phone, .email, .org, .type {
     display: inline-block;
     margin: 0;
-    width: 33%;
+    width: 50%;
 }
 
-.phone {
+.org-email {
     display: inline-block;
     margin: 0;
-    width: 15%;
+    width: 100%;
 }
 
-.email {
-    display: inline-block;
-    margin: 0;
-    width: 33%;
+.type {
+    color: #707070;
 }
 
 ul button {
